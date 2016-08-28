@@ -24,7 +24,8 @@ import scipy.sparse as sp
 from scipy.spatial.distance import cdist, pdist, squareform
 
 from sklearn.metrics import pairwise_distances
-from sklearn.utils import check_random_state, atleast2d_or_csr
+from sklearn.utils import check_random_state #, atleast2d_or_csr
+from sklearn.utils.validation import check_array
 from sklearn.utils.extmath import safe_sparse_dot
 from sklearn.base import BaseEstimator, TransformerMixin
 
@@ -108,7 +109,8 @@ class BaseRandomLayer(BaseEstimator, TransformerMixin):
         -------
         self
         """
-        X = atleast2d_or_csr(X)
+        # X = atleast2d_or_csr(X)
+        X = check_array(X)
 
         self._generate_components(X)
 
@@ -130,7 +132,8 @@ class BaseRandomLayer(BaseEstimator, TransformerMixin):
         -------
         X_new : numpy array of shape [n_samples, n_components]
         """
-        X = atleast2d_or_csr(X)
+        # X = atleast2d_or_csr(X)
+        X = check_array(X)
 
         if (self.components_ is None):
             raise ValueError('No components initialized')
